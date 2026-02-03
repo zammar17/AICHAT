@@ -3,11 +3,16 @@ import os
 from openai import OpenAI
 from dotenv import load_dotenv
 
-load_dotenv()
+base_dir = os.path.dirname(os.path.abspath(__file__))
+dotenv_path = os.path.join(base_dir, ".env")
+
+load_dotenv(dotenv_path)
 
 api_key = os.getenv("OPENAI_API_KEY")
 
 if not api_key:
+    print(f"DEBUG: Looking for .env at {dotenv_path}")
+    print(f"DEBUG: Current directory: {os.getcwd()}")
     raise ValueError("OPENAI_API_KEY is not set in .env file!")
 
 client = OpenAI(api_key=api_key)
